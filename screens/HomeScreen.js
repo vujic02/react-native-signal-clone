@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -8,15 +8,32 @@ import {
 } from "react-native";
 import { Button, Text, Avatar } from "react-native-elements";
 import ChatListItem from "../components/ChatListItem";
-import { auth } from "./../firebase";
+import { auth, db } from "./../firebase";
 import { AntDesign, SimpleLineIcons } from "@expo/vector-icons";
 
 const HomeScreen = ({ navigation }) => {
+  const [chats, setChats] = useState([]);
+
+  console.log(chats);
+
   const signOut = () => {
     auth.signOut().then(() => {
       navigation.replace("Login");
     });
   };
+
+  useEffect(() => {
+    const unsubscribe = db.collection("chats").onSnapshot((snapshot) =>
+      setChats(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      )
+    );
+
+    return unsubscribe;
+  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -51,7 +68,10 @@ const HomeScreen = ({ navigation }) => {
             <TouchableOpacity activeOpacity={0.5}>
               <AntDesign name="camerao" color="black" size={24} />
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.5}>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => navigation.navigate("AddChat")}
+            >
               <SimpleLineIcons name="pencil" color="black" size={20} />
             </TouchableOpacity>
           </View>
@@ -60,10 +80,24 @@ const HomeScreen = ({ navigation }) => {
     });
   }, [navigation]);
 
+  const enterChat = (id, chatName) => {
+    navigation.navigate("Chat", {
+      id,
+      chatName,
+    });
+  };
+
   return (
     <SafeAreaView>
-      <ScrollView>
-        <ChatListItem />
+      <ScrollView style={{ height: "100%" }}>
+        {chats.map((chat) => (
+          <ChatListItem
+            key={chat.id}
+            id={chat.id}
+            chatName={chat.data.chatName}
+            enterChat={enterChat}
+          />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );

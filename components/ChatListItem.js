@@ -4,7 +4,7 @@ import { ListItem, Text, Avatar } from "react-native-elements";
 
 const ChatListItem = ({ id, chatName, enterChat }) => {
   return (
-    <ListItem>
+    <ListItem onPress={() => enterChat(id, chatName)} key={id} bottomDivider>
       <Avatar
         rounded
         source={{
@@ -12,7 +12,7 @@ const ChatListItem = ({ id, chatName, enterChat }) => {
         }}
       />
       <ListItem.Content>
-        <ListItem.Title>Katie</ListItem.Title>
+        <ListItem.Title>{chatName}</ListItem.Title>
         <ListItem.Subtitle numberOfLines={1} ellipsizeMode="tail">
           Today's subject... Slavery.
         </ListItem.Subtitle>

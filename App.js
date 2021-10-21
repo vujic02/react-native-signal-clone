@@ -6,6 +6,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import HomeScreen from "./screens/HomeScreen";
+import AddChatScreen from "./screens/AddChatScreen";
+import ChatScreen from "./screens/ChatScreen";
 
 const Stack = createStackNavigator();
 
@@ -13,9 +15,51 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{
+            headerStyle: {
+              backgroundColor: "rgb(32, 137, 220)",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
+          options={{
+            headerStyle: {
+              backgroundColor: "rgb(32, 137, 220)",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            headerStyle: {
+              backgroundColor: "rgb(32, 137, 220)",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="AddChat"
+          component={AddChatScreen}
+          options={{
+            headerStyle: {
+              backgroundColor: "rgb(32, 137, 220)",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Chat"
+          component={ChatScreen}
+          options={{
+            headerStyle: {
+              backgroundColor: "rgb(32, 137, 220)",
+            },
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
