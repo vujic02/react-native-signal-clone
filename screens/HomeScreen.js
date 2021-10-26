@@ -14,8 +14,6 @@ import { AntDesign, SimpleLineIcons } from "@expo/vector-icons";
 const HomeScreen = ({ navigation }) => {
   const [chats, setChats] = useState([]);
 
-  console.log(chats);
-
   const signOut = () => {
     auth.signOut().then(() => {
       navigation.replace("Login");

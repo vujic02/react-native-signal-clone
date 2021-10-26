@@ -37,27 +37,27 @@ const RegisterScreen = ({ navigation }) => {
         placeholder="Full Name"
         autoFocus
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChangeText={(text) => setName(text)}
         style={styles.inputContainer}
       />
       <Input
         placeholder="Email Adress"
         autoFocus
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChangeText={(text) => setEmail(text)}
         style={styles.inputContainer}
       />
       <Input
         placeholder="Password"
         secureTextEntry
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChangeText={(text) => setPassword(text)}
         style={styles.inputContainer}
       />
       <Input
         placeholder="Profile picture URL (optional)"
         value={imgUrl}
-        onChange={(e) => setImgUrl(e.target.value)}
+        onChangeText={(text) => setImgUrl(text)}
         style={styles.inputContainer}
       />
       <Button

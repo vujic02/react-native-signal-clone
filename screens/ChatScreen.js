@@ -1,8 +1,23 @@
-import React, { useLayoutEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useLayoutEffect, useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  TextInput,
+} from "react-native";
 import { Avatar } from "react-native-elements";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { AntDesign, FontAwesome, Ionicons } from "react-native-vector-icons";
 
 const ChatScreen = ({ navigation, route }) => {
+  const [input, setInput] = useState("");
+
+  const sendMessage = () => {};
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: "Chat",
@@ -21,18 +36,78 @@ const ChatScreen = ({ navigation, route }) => {
           </Text>
         </View>
       ),
-      headerLeft: () => <View></View>,
-      headerRight: () => <View></View>,
+      headerLeft: () => (
+        <TouchableOpacity
+          style={{ marginLeft: 10 }}
+          onPress={() => navigation.goBack()}
+        >
+          <AntDesign name="arrowleft" size={24} color="white" />
+        </TouchableOpacity>
+      ),
+      headerRight: () => (
+        <View style={styles.container}>
+          <TouchableOpacity>
+            <FontAwesome name="video-camera" size={24} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Ionicons name="call" size={24} color="white" />
+          </TouchableOpacity>
+        </View>
+      ),
     });
   }, [navigation]);
 
   return (
-    <View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <Text>{route.params.chatName}</Text>
-    </View>
+
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+        keyboardVerticalOffset={90}
+      >
+        <ScrollView></ScrollView>
+        <View style={styles.footer}>
+          <TextInput
+            placeholder="Signal Message"
+            style={styles.textInput}
+            value={input}
+            onChangeText={(text) => setInput(text)}
+          />
+          <TouchableOpacity onPress={sendMessage} activeOpacity={0.5}>
+            <Ionicons name="send" size={24} color="#2B68E6" />
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
 export default ChatScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: 80,
+    marginRight: 20,
+  },
+  footer: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    padding: 15,
+  },
+  textInput: {
+    bottom: 0,
+    height: 40,
+    flex: 1,
+    marginRight: 15,
+    borderColor: "transparent",
+    backgroundColor: "#ECECEC",
+    borderWidth: 1,
+    padding: 10,
+    color: "grey",
+    borderRadius: 30,
+  },
+});
